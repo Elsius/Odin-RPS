@@ -1,7 +1,5 @@
-console.log('run "playRound()" to play rock paper scissors')
+console.log('run "playGame()" to play rock paper scissors')
 
-let computerChoice = '';
-let playerChoice = '';
 function computerPlay() {
     let random = Math.floor(Math.random() * 3) + 1;
     if (random === 1) {
@@ -14,20 +12,31 @@ function computerPlay() {
         return 'rock'
     }
 }
-// rewrite the win condition into an array of conditionals and reading it off the array instead of writing it all into the if
-function playRound(playerChoice = prompt('Your choice?').toLowerCase(), computerChoice = computerPlay()) {
-    console.log('You chose ' + playerChoice + ' while the computer chose ' + computerChoice)
-    if (playerChoice == computerChoice) {
-        return 'DRAW!'
+/* prompt user to give an answer and put it in myPick
+    run computerPlay() function to get computer's pick and put it in cpuPick
+    check myPick against cpuPick, 
+        if they match, its a draw
+        else if win conditions, you win
+        else if lose conditions, you lose
+        else invalid input
+    */
+function playGame() {
+    let myPick = prompt('Rock, Paper, or Scissors?').toLowerCase()
+    let cpuPick = computerPlay()
+    if (myPick == cpuPick) {
+        return `You chose ${myPick}. They chose ${cpuPick}. Draw!`
     }
-    //not sure why this is triggering or why the else is triggering on top of it
-    else if (playerChoice != 'rock' || playerChoice != 'scissors' || playerChoice != 'paper') {
-        return "You didn't choose rock, paper, or scissors."
+    else if (myPick == 'rock' && cpuPick == 'scissors' || 
+            myPick == 'scissors' && cpuPick == 'paper' || 
+            myPick == 'paper' && cpuPick == 'rock') {
+        return (myPick + ' beats ' + cpuPick + '! Winner!')
     }
-    else if (playerChoice === 'rock' && computerChoice == 'scissors' || playerChoice == 'scissors' && computerChoice == 'paper' || playerChoice == 'paper' && computerChoice == 'rock') {
-        return (playerChoice + ' beats ' + computerChoice + '! Winner!')
-    }
+    else if (myPick == 'rock' && cpuPick == 'paper' ||
+            myPick == 'paper' && cpuPick == 'scissors' ||
+            myPick == 'scissors' && cpuPick == 'rock'){
+        return (myPick + ' does not beat ' + cpuPick + '. You lose.')
+            }
     else {
-        return 'You chose ' + playerChoice + ' while the computer chose ' + computerChoice
+        return `What the hell is ${myPick}?!`
     }
 }
