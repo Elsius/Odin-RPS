@@ -12,38 +12,57 @@ function computerPlay() {
         return 'rock'
     }
 }
-/* prompt user to give an answer and put it in myPick
-    run computerPlay() function to get computer's pick and put it in cpuPick
-    check myPick against cpuPick, 
-        if they match, its a draw
-        else if win conditions, you win
-        else if lose conditions, you lose
-        else invalid input
-    */
+
 function playGame(myPick = prompt('Rock, Paper, or Scissors?').toLowerCase()) {
-    let cpuPick = computerPlay();
+    let cpuPick = computerPlay()
     //Draw condition
     if (myPick == cpuPick) {
-        return `You chose ${myPick}. They chose ${cpuPick}. Draw!`
+        return matchResult(`You chose ${myPick}. They chose ${cpuPick}. Draw!`)
     }
     //Win condition
-    else if (myPick == 'rock' && cpuPick == 'scissors' || 
-        myPick == 'scissors' && cpuPick == 'paper' || 
+    else if (myPick == 'rock' && cpuPick == 'scissors' ||
+        myPick == 'scissors' && cpuPick == 'paper' ||
         myPick == 'paper' && cpuPick == 'rock') {
-            return (myPick + ' beats ' + cpuPick + '! Winner!')
+        return matchResult(`You win, ${myPick} beats ${cpuPick}.`, 'me')
     }
     //Lose condition
-    else if (myPick == 'rock' && cpuPick == 'paper' || 
-        myPick == 'paper' && cpuPick == 'scissors' || 
-        myPick == 'scissors' && cpuPick == 'rock'){
-            return (myPick + ' does not beat ' + cpuPick + '. You lose.')
+    else if (myPick == 'rock' && cpuPick == 'paper' ||
+        myPick == 'paper' && cpuPick == 'scissors' ||
+        myPick == 'scissors' && cpuPick == 'rock') {
+        return matchResult(`You lose, ${myPick} does not beat ${cpuPick}.`, 'cpu')
     }
     //Invalid input
     else {
-        return `What the hell is ${myPick}?!`
+        return matchResult(`What the hell is ${myPick}?!`)
     }
 }
 
-for (let i = 0; i < 5; i++){
-    console.log(playGame(computerPlay()))
+function matchResult(matchResult,winner){
+    const log = document.querySelector('#outputBox');
+    let cScore = parseInt(document.querySelector('#computerScore').textContent, 10),
+        pScore = parseInt(document.querySelector('#playerScore').textContent, 10);
+    log.textContent = `\n ${matchResult} `
+    if (winner == 'me'){
+        pScore = pScore + 1;
+        document.querySelector('#playerScore').textContent = pScore;
+    }
+    if (winner == 'cpu'){
+        cScore = cScore + 1;
+        document.querySelector('#computerScore').textContent = cScore;        
+    }
+    if (pScore == 5){
+        log.textContent = `You win!`
+    }
+    if (cScore == 5)(
+        log.textContent = `You Lose!`
+    )
 }
+
+const rockButton = document.querySelector('#rock'),
+    paperButton = document.querySelector('#paper'),
+    scissorsButton = document.querySelector('#scissors');
+
+rockButton.addEventListener('click', () => playGame('rock'));
+paperButton.addEventListener('click', () => playGame('paper'));
+scissorsButton.addEventListener('click', () => playGame('scissors'));
+
