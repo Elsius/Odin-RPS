@@ -1,0 +1,20 @@
+#gameBox {
+    background-color: beige;
+    border: 2px solid black;
+    width: 300px;
+}
+
+#buttonBox {
+    display: flex;
+    justify-content: center;
+}
+
+#outputBox {
+    display: flex;
+    justify-content: center;
+}
+
+#score {
+    display: flex;
+    justify-content: space-around;
+}
